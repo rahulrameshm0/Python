@@ -41,20 +41,20 @@ class Library:
         book_name = input("Enter the name of the book: ")
         if self.is_book_found(book_name):
             book = self.book_details[book_name]
-            if book.book_count > 0:
-                if self.current_user.user_count < self.current_user.borrow_limit:
-                    book.book_count -= 1
-                    self.current_user.user_count += 1
-                    print("book taken successfully")
-                else:
-                    print("You can only borrow 2 book at a time!")
-            else:
-                print("This book is not available now, please come back later.")
+            if book_name in self.current_user.borrow_copy:
+                print("You can only borrow 1 copy at time!")
                 return
+            if book.book_count > 0:
+                self.current_user.borrow_copy.append(book_name)
+                book.book_count -= 1
+                print("book taken successfully")
+        else:
+            print("This book is not available now, please come back later.")
+
     def returns_book(self):
         return_book_name = input("Enter the name of the book: ")
         self.book_details[return_book_name].book_count += 1
-        self.current_user.user_count -= 1
+        self.current_user.borrow_copy.remove(return_book_name)
         print(f"Book returned successfully")
 
     def add_user(self):
@@ -65,7 +65,7 @@ class Library:
             age = input("Enter the age: ")
             id_no = input("Enter the ID number: ")
             total_book = int(input("Enter total book taken: "))
-            self.user_details[username] = User(username, password, contact, id_no, age, "user", total_book)
+            self.user_details[username] = User(username, password, contact, id_no, age, "user", 1)
             print("user added successfully!")
 
     def delete_user(self):
@@ -147,7 +147,7 @@ class Book:
         self.book_count = book_count
 
 class User:
-    def __init__(self, name, password, contact, id_no, age, privilege,user_count):
+    def __init__(self, name, password, contact, id_no, age, privilege, user_count):
         self.name = name
         self.password = password
         self.contact = contact
@@ -155,20 +155,18 @@ class User:
         self.age = age
         self.privilege = privilege
         self.user_count = user_count
-        self.borrow_limit = 2
+        self.borrow_limit = 1
+        self.borrow_copy = []
 
     def update_user(self):
         pass
 
+
 library_management = Library()
-
 library_user = User("default","","","","","", "")
-
 library_books = Book("Harry 2", "Jk",3)
-
 library_management.book_details["Harry 1"] = Book("Harry 1", "JK", 5)
-
 library_management.user_details["Rahul"] = User("Rahul", "7248", 9496320858, 1, 26, "admin",1)
-
 library_management.log_in()
+
 
