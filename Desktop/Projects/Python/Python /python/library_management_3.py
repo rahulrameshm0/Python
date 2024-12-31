@@ -109,12 +109,13 @@ class Library:
                     pass
                 elif choice == 12:
                     self.log_in()
+                    exit()
                 else:
                     print("Enter a valid option!")
-                    break
+                    continue
 
             except ValueError:
-                print("Enter a valid input: ")
+                print("Enter a valid input")
 
     def log_in(self):
         while True:
@@ -126,13 +127,14 @@ class Library:
                     password = input("password: ")
 
                     if username not in self.user_details or self.user_details[username].password != password:
-                        print("username or password is correct!")
+                        print("username or password is incorrect!")
                         continue
-                    self.current_user = self.user_details[username]
-                    self.menu()
+                    else:
+                        self.current_user = self.user_details[username]
+                        self.menu()
 
                 elif option == 2:
-                    print("Thank You!")
+                    print("Thank You for using our banking system!")
                     break
 
                 else:
@@ -161,12 +163,15 @@ class User:
     def update_user(self):
         pass
 
+def main():
+    library_management = Library()
+    library_management.user_details["Rahul"] = User("Rahul", "7248", 9496320858, 1, 26, "admin",1)
+    library_user = User("default","","","","","", "")
+    library_management.log_in()
+    library_management.book_details["Harry 1"] = Book("Harry 1", "JK", 5)
+    library_books = Book("Harry 2", "Jk",3)
 
-library_management = Library()
-library_user = User("default","","","","","", "")
-library_books = Book("Harry 2", "Jk",3)
-library_management.book_details["Harry 1"] = Book("Harry 1", "JK", 5)
-library_management.user_details["Rahul"] = User("Rahul", "7248", 9496320858, 1, 26, "admin",1)
-library_management.log_in()
+if __name__ == "__main__":
+    main()
 
 
