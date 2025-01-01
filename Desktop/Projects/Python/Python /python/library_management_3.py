@@ -86,13 +86,13 @@ class Library:
             try:
                 choice = int(input("Enter your choice: "))
                 if choice == 1:
-                    library_management.add_book()
+                  self.add_book()
                 elif choice == 2:
-                    library_management.remove_book()
+                    self.remove_book()
                 elif choice == 3:
-                    library_management.borrow_book()
+                    self.borrow_book()
                 elif choice == 4:
-                    library_management.returns_book()
+                    self.returns_book()
                 elif choice == 5:
                     pass
                 elif choice == 6:
@@ -165,13 +165,19 @@ class User:
 
 def main():
     library_management = Library()
+
+    library_management.book_details["Harry 1"] = Book("Harry 1", "JK", 5)
+    library_books = Book("Harry 2", "Jk", 3)
+
     library_management.user_details["Rahul"] = User("Rahul", "7248", 9496320858, 1, 26, "admin",1)
     library_user = User("default","","","","","", "")
+
+    print("Welcome to library management system!")
     library_management.log_in()
-    library_management.book_details["Harry 1"] = Book("Harry 1", "JK", 5)
-    library_books = Book("Harry 2", "Jk",3)
 
 if __name__ == "__main__":
     main()
+
+
 
 
